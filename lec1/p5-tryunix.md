@@ -270,6 +270,55 @@ fork()系统调用创建一个进程的副本（子进程）
 ![bg right:40% 100%](../lec7/figs/fork.png)
 
 ---
+## UNIX/Linux应用 - fork
+
+[fork.c](https://pdos.csail.mit.edu/6.828/2021/lec/l-overview/fork.c) 所有可能的情况是怎样的呢？
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/fork.py | python3 -m vis > tutorials/fork.html
+  ```
+- 打开 [fork.html](./examples/mosaic/fork.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```python
+  # Outputs:
+  # fork() returned 0\nchild\nfork() returned 1002\nparent
+  # fork() returned 1002\nparent\nfork() returned 0\nchild
+  ```
+
+---
+## UNIX/Linux应用 - fork
+
+![bg right:55% 100%](./figs/fork-mosaic-parent.png)
+
+这个分支表示的是先执行 parent 进程，再执行 child 进程的输出。
+
+输出：
+
+```
+fork() returned 1002
+parent
+fork() returned 0
+child
+```
+
+---
+## UNIX/Linux应用 - fork
+
+![bg right:55% 100%](./figs/fork-mosaic-child.png)
+
+这个分支表示的是先执行 child 进程，再执行 parent 进程的输出。
+
+输出：
+
+```
+fork() returned 0
+child
+fork() returned 1002
+parent
+```
+
+---
 ## UNIX/Linux应用 - exec
 
 - 怎样才能在这个进程中运行一个新程序呢？  
@@ -292,6 +341,29 @@ argument-array保存命令行参数；exec传递给main()
     cat user/echo.c
 
 echo.c显示了一个程序如何看待它的命令行参数 -->
+---
+## UNIX/Linux应用 - exec
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/exec.py | python3 -m vis > tutorials/exec.html
+  ```
+- 打开 [exec.html](./examples/mosaic/exec.html)
+
+为了方便演示，在 exec 执行之前修改了堆栈中的内容。
+
+```python
+heap.buf = '0x5f3759df'
+```
+
+---
+## UNIX/Linux应用 - exec
+
+- 展示运行时的系统调用和内存空间布局
+
+![bg right:55% 100%](./figs/exec-mosaic.png)
+
+注意到在 exec 执行后，堆栈中原有的内容全部被清空
 
 ---
 ## UNIX/Linux应用 - forkexec
