@@ -456,45 +456,52 @@ if(pid == 0) {			// 子进程在这里继续
 
 ##### 程序加载并执行的示例
 
-- 系统调用exec( )加载新程序取代当前运行进程 (代码是否有问题???)
-```C
-main()
-…
-int pid = fork();			// 创建子进程
-if (pid == 0) {			        // 子进程在这里继续
-    exec_status = exec(“calc”, argc, argv0, argv1, …);
-    printf(“Why would I execute?”);     // 这行代码能执行到吗???
-}  else {				// 父进程在这里继续
-    printf(“Whose your daddy?”);
-    …
-    child_status = wait(pid);
-}
+- 系统调用exec( )加载新程序取代当前运行进程 (代码是否有问题？)
 
+```c
+int main() {
+  int pid = fork(); // 创建子进程
+  if (pid == 0) { // 子进程在这里继续
+    char *argv = {"echo", "this", "is", "echo", 0};
+    exec_status = exec("echo", argv);
+    printf("Why would I execute?"); // 这条语句会执行吗？
+  } else if (pid > 0) { // 父进程在这里继续
+    printf("Who's your daddy?");
+    child_status = wait(pid);
+  } else {
+    /* error occurred */ // (pid < 0) 
+    printf("Error occurred");
+  }
+}
 ```
 
- 
 ---
 
 ##### 程序加载并执行的示例
 
-- 系统调用exec( )加载新程序取代当前运行进程
-```C
-main()
-…
-int pid = fork();			// 创建子进程
-if (pid == 0) {			        // 子进程在这里继续
-    exec_status = exec(“calc”, argc, argv0, argv1, …);
-    printf(“Why would I execute?”);
-}  else if (pid > 0) {				// 父进程在这里继续
-    printf(“Whose your daddy?”);
-    …
-    child_status = wait(pid);
-} else {
-{ /* error occurred */ // (pid < 0) 
-```
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/lec7/fork-exec.py | python3 -m vis > tutorials/lec7/fork-exec.html
+  ```
+- 打开 [fork.html](./examples/mosaic/fork-exec.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```
+  # Outputs:
+  # Who's your daddy?\nthis is echo
+  # this is echo
+  ```
+无论哪种情况，都不会输出 `Why would I execute?`。
 
+---
 
- 
+##### 程序加载并执行的示例
+
+![bg right:55% 100%](./figs/fork-exec-mosaic.png)
+
+上面的分支是父进程，输出 `Who's your daddy?\n` 之后，再执行子进程的 `exec`，输出 `this is echo`。
+
+下面的的分支是子进程，执行 `exec`，输出 `this is echo` 即退出。
+
 ---
 
 ##### 程序加载并执行的过程
