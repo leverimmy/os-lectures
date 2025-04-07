@@ -135,7 +135,23 @@ backgroundColor: white
 
 ![bg right:50% 100%](figs/method-1.png)
 
+---
 
+#####  方案一测试
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/lec12/mutex-1.py | python3 -m vis > tutorials/lec12/mutex-1.html
+  ```
+- 打开 [mutex-1.html](./examples/mosaic/mutex-1.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```
+  # Outputs:
+  # Bought 1 bread.
+  # Bought 2 bread.
+  ```
+
+可以发现，有可能买到 2 个面包。
 
 ---  
 
@@ -155,6 +171,23 @@ remove note;
 
 ![bg right:50% 100%](figs/method-2.png)
 
+---
+
+#####  方案二测试
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/lec12/mutex-2.py | python3 -m vis > tutorials/lec12/mutex-2.html
+  ```
+- 打开 [mutex-2.html](./examples/mosaic/mutex-2.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```
+  # Outputs:
+  # Bought 0 bread.
+  # Bought 1 bread.
+  ```
+
+可以发现，有可能没有人买面包。
 
 ---  
 
@@ -163,13 +196,13 @@ remove note;
    - 现在可在检查之前留便签
 ```
 // 进程A
-leave note_2;
-if (no note_1) {
+leave note_1;
+if (no note_2) {
    if (no bread) { 
      buy bread; 
    } 
 } 
-remove note_2;	
+remove note_1;	
 ```
 
 ![bg right:49% 100%](figs/method-3.png)
@@ -181,13 +214,13 @@ remove note_2;
   - 现在可在检查之前留便签
 ```
 // 进程B
-leave note_1;
-if (no note_2) {
+leave note_2;
+if (no note_1) {
    if (no bread) { 
      buy bread; 
    } 
 } 
-remove note_1;
+remove note_2;
 ```
 ![bg right:49% 100%](figs/method-3.png)
 
@@ -202,12 +235,47 @@ remove note_1;
 
 ![bg right:50% 100%](figs/method-3.png)
 
+---
+
+#####  方案三测试
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/lec12/mutex-3.py | python3 -m vis > tutorials/lec12/mutex-3.html
+  ```
+- 打开 [mutex-3.html](./examples/mosaic/mutex-3.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```
+  # Outputs:
+  # Bought 0 bread.
+  # Bought 1 bread.
+  ```
+
+可以发现，还是有可能没有人买面包。
+
 ---  
 
 ##### 方案四：采用不同流程
 两个人采用不同的处理流程
 
 ![w:1000](figs/method-4.png)
+
+---
+
+#####  方案四测试
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/lec12/mutex-4.py | python3 -m vis > tutorials/lec12/mutex-4.html
+  ```
+- 打开 [mutex-4.html](./examples/mosaic/mutex-4.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```
+  # Outputs:
+  # Bought 1 bread.
+  ```
+
+可以发现，这个解决办法是有效的！
 
 ---  
 
@@ -233,6 +301,25 @@ remove note_1;
      - 解锁并唤醒任何等待中的线程
 
 ![bg right:32% 100%](figs/method-5.png)
+
+---
+
+#####  方案五测试
+
+不妨让更多人（N>2）去买面包，假设 N=5。
+
+- 执行
+  ```bash
+  python3 mosaic.py --check tutorials/lec12/mutex-5.py | python3 -m vis > tutorials/lec12/mutex-5.html
+  ```
+- 打开 [mutex-5.html](./examples/mosaic/mutex-5.html)
+- 右侧显示的代码中含有所有可能的输出：
+  ```
+  # Outputs:
+  # Bought 1 bread.
+  ```
+
+这个解决办法是有效的！在人更多的情况下，这个解决办法也依然有效。
 
 <!-- 
 --- 
