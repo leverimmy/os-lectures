@@ -276,11 +276,11 @@ fork()系统调用创建一个进程的副本（子进程）
 
 - 执行
   ```bash
-  python3 mosaic.py --check tutorials/fork.py | python3 -m vis > tutorials/fork.html
+  python3 mosaic.py --check tutorials/lec1/fork.py | python3 -m vis > tutorials/lec1/fork.html
   ```
 - 打开 [fork.html](./examples/mosaic/fork.html)
 - 右侧显示的代码中含有所有可能的输出：
-  ```python
+  ```
   # Outputs:
   # fork() returned 0\nchild\nfork() returned 1002\nparent
   # fork() returned 1002\nparent\nfork() returned 0\nchild
@@ -346,7 +346,7 @@ echo.c显示了一个程序如何看待它的命令行参数 -->
 
 - 执行
   ```bash
-  python3 mosaic.py --check tutorials/exec.py | python3 -m vis > tutorials/exec.html
+  python3 mosaic.py --check tutorials/lec1/exec.py | python3 -m vis > tutorials/lec1/exec.html
   ```
 - 打开 [exec.html](./examples/mosaic/exec.html)
 
